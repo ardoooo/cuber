@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: time-app
+  template:
+    metadata:
+      labels:
+        app: time-app
+    spec:
+      containers:
+      - name: time-app
+        image: time-app-image-v2:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080

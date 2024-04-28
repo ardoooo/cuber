@@ -1,0 +1,24 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-app-metrics-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: time-app-metrics-exporter
+  template:
+    metadata:
+      labels:
+        app: time-app-metrics-exporter
+    spec:
+      containers:
+        - name: time-app-metrics-exporter
+          image: time-app-metrics-exporter-image:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 8000
+          env:
+          - name: SERVICE_URL
+            value: http://time-app-service.default.svc.cluster.local

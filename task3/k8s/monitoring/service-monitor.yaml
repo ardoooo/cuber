@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: time-app-metrics-exporter-servicemonitor
+  namespace: monitoring
+  labels:
+    release: prometheus-operator
+spec:
+  selector:
+    matchLabels:
+      app: time-app-metrics-exporter
+  endpoints:
+    - port: metrics
+      interval: 10s

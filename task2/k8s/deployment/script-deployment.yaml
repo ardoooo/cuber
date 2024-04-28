@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-app-script-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: time-app-script
+  template:
+    metadata:
+      labels:
+        app: time-app-script
+    spec:
+      containers:
+      - name: time-app-script
+        image: time-app-script-image:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: SERVICE_URL
+          value: http://time-app-service.default.svc.cluster.local

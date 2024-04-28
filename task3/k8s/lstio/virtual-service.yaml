@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: time-app-virtual-service
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - time-app-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: time-app-service
+        port:
+          number: 80
