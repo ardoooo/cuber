@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: time-app-script-cronjob
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: time-app-script
+            image: time-app-script-image:latest
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: SERVICE_URL
+              value: http://time-app-service.default.svc.cluster.local
+            - name: INNER_INTERVAL_S
+              value: "5"
+            volumeMounts:
+            - name: log-storage
+              mountPath: /logs
+          volumes:
+          - name: log-storage
+            hostPath:
+              path: /var/data/logs
+              type: DirectoryOrCreate
+          activeDeadlineSeconds: 60
+          restartPolicy: OnFailure
